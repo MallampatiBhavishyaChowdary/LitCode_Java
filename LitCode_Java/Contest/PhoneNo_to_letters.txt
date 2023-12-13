@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Main {
+
+    public static List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+
+        Map<Character, String> digitToLetters = new HashMap<>();
+        digitToLetters.put('2', "abc");
+        digitToLetters.put('3', "def");
+        digitToLetters.put('4', "ghi");
+        digitToLetters.put('5', "jkl");
+        digitToLetters.put('6', "mno");
+        digitToLetters.put('7', "pqrs");
+        digitToLetters.put('8', "tuv");
+        digitToLetters.put('9', "wxyz");
+
+        backtrack(result, digits, digitToLetters, new StringBuilder(), 0);
+
+        return result;
+    }
+
+    private static void backtrack(List<String> result, String digits, Map<Character, String> digitToLetters, StringBuilder current, int index) {
+        if (index == digits.length()) {
+            result.add(current.toString());
+            return;
+        }
+
+        char digit = digits.charAt(index);
+        if (digitToLetters.containsKey(digit)) {
+            String letters = digitToLetters.get(digit);
+
+            for (int i = 0; i < letters.length(); i++) {
+                current.append(letters.charAt(i));
+                backtrack(result, digits, digitToLetters, current, index + 1);
+                current.deleteCharAt(current.length() - 1);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Exercise-1
+        String input1 = "23";
+        List<String> output1 = letterCombinations(input1);
+        printOutput(output1);
+
+        // Exercise-2
+        String input2 = "134";
+        List<String> output2 = letterCombinations(input2);
+        printOutput(output2);
+    }
+
+    private static void printOutput(List<String> output) {
+        for (String combination : output) {
+            System.out.print(combination + " ");
+        }
+        System.out.println();
+    }
+}

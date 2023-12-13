@@ -1,0 +1,47 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+
+    public static String isBalanced(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char bracket : s.toCharArray()) {
+            if (bracket == '(' || bracket == '{' || bracket == '[') {
+                stack.push(bracket);
+            } else if (bracket == ')' && !stack.isEmpty() && stack.peek() == '(') {
+                stack.pop();
+            } else if (bracket == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+            } else if (bracket == ']' && !stack.isEmpty() && stack.peek() == '[') {
+                stack.pop();
+            } else {
+                return "NO";
+            }
+        }
+
+        return stack.isEmpty() ? "YES" : "NO";
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of strings: ");
+
+        try {
+            int n = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
+
+            System.out.println("Enter the strings:");
+
+            for (int i = 0; i < n; i++) {
+                String input = scanner.nextLine();
+                System.out.println(isBalanced(input));
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a valid integer.");
+        } finally {
+            scanner.close();
+        }
+    }
+}

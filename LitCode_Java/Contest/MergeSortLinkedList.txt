@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+public class Main {
+
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                current.next = l1;
+                l1 = l1.next;
+            } else {
+                current.next = l2;
+                l2 = l2.next;
+            }
+            current = current.next;
+        }
+
+        if (l1 != null) {
+            current.next = l1;
+        }
+
+        if (l2 != null) {
+            current.next = l2;
+        }
+
+        return dummy.next;
+    }
+
+    public static void printList(ListNode head) {
+        ListNode current = head;
+
+        while (current != null) {
+            System.out.println(current.val);
+            current = current.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Reading input for the first linked list
+        int n1 = scanner.nextInt();
+        ListNode head1 = null;
+        ListNode tail1 = null;
+        for (int i = 0; i < n1; i++) {
+            int val = scanner.nextInt();
+            ListNode node = new ListNode(val);
+            if (head1 == null) {
+                head1 = node;
+                tail1 = node;
+            } else {
+                tail1.next = node;
+                tail1 = node;
+            }
+        }
+
+        // Reading input for the second linked list
+        int n2 = scanner.nextInt();
+        ListNode head2 = null;
+        ListNode tail2 = null;
+        for (int i = 0; i < n2; i++) {
+            int val = scanner.nextInt();
+            ListNode node = new ListNode(val);
+            if (head2 == null) {
+                head2 = node;
+                tail2 = node;
+            } else {
+                tail2.next = node;
+                tail2 = node;
+            }
+        }
+
+        // Merging the two linked lists
+        ListNode mergedList = mergeTwoLists(head1, head2);
+
+        // Printing the merged list
+        printList(mergedList);
+
+        scanner.close();
+    }
+}
